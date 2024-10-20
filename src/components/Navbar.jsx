@@ -90,6 +90,16 @@ export default function Navbar() {
                     />
                     <ListItem 
                         variant={navItemVariant}
+                        menuLabel={"Search"}
+                        activeMenuLabel={currentPage}
+                        clickHandler={() => {
+                            setCurrentPage('Search');
+                            setCurrentForm('');
+                            toggleOpen();
+                        }}
+                    />
+                    <ListItem 
+                        variant={navItemVariant}
                         menuLabel={"Collect Data"}
                         activeMenuLabel={currentPage}
                         clickHandler={() => {
