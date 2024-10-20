@@ -2,9 +2,12 @@ import { auth } from '../index';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { motion } from 'framer-motion';
+import { getAnalytics, logEvent } from 'firebase/analytics'; // Firebase analytics Import
 
 export const LoginWrapper = ({ children }) => {
     const [user, loading, error] = useAuthState(auth);
+
+    const analytics = getAnalytics();  // Access Analytics instance
 
     if (user && user.email.slice(-7) === 'asu.edu') {
         return children;
