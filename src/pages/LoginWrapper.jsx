@@ -9,6 +9,19 @@ export const LoginWrapper = ({ children }) => {
 
     const analytics = getAnalytics();  // Access Analytics instance
 
+    // Analytics logging method
+    const logAnalyticsEvent = (user) => {
+        logEvent(analytics, 'login', {
+            method: 'Google',   // Logging the method of login
+            email: user.email,  // Capturing user's email
+            uid: user.uid       // Capturing user's UID
+        });
+    };
+
+    // Handle the login with google auth popup
+    // asu.edu email
+    // Eventually password sign in req on US80
+
     if (user && user.email.slice(-7) === 'asu.edu') {
         return children;
     } else if (loading) {
