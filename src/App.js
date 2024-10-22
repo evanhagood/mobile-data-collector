@@ -13,6 +13,7 @@ import {
     triggerUpdateOnLastEditTime,
 } from './utils/jotai';
 import Home from './pages/Home';
+import Search from './pages/Search';
 import PastSessionData from './pages/PastSessionData';
 import Navbar from './components/Navbar';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -95,6 +96,7 @@ function App() {
                 ) : (
                     <AppWrapper>
                         {currentPage === 'Home' && <Home />}
+                        {currentPage === 'Search' && <Search />}
                         {currentPage === 'History' && <PastSessionData />}
                         {currentPage === 'Collect Data' && <CollectData />}
                         {currentPage === 'About Us' && <AboutUs />}
