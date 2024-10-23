@@ -21,6 +21,20 @@ export const LoginWrapper = ({ children }) => {
     // Handle the login with google auth popup
     // asu.edu email
     // Eventually password sign in req on US80
+    const handleLogin = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            if (user.email.slice(-7) === 'asu.edu') {
+                // Log the login event using Firebase Analytics
+                logAnalyticsEvent(user);
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
+
 
     if (user && user.email.slice(-7) === 'asu.edu') {
         return children;
@@ -46,7 +60,7 @@ export const LoginWrapper = ({ children }) => {
                 </motion.p>
                 <motion.button
                     className="text-black border-asu-maroon text-2xl w-1/2 py-2 border-2 rounded-2xl"
-                    onClick={() => signInWithPopup(auth, new GoogleAuthProvider())}
+                    onClick={handleLogin}
                 >
                     Login
                 </motion.button>
