@@ -11,6 +11,7 @@ export const LoginWrapper = ({ children }) => {
 
     // Analytics logging method
     const logAnalyticsEvent = (user) => {
+        console.log("Logging analytics event for user:", user); // Checking if passed login event
         logEvent(analytics, 'login', {
             method: 'Google',   // Logging the method of login
             email: user.email,  // Capturing user's email
