@@ -1,7 +1,5 @@
 import pkg from '@eslint/js';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
-import reactHooks from 'eslint-plugin-react-hooks';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
 import globals from 'globals';
 
 const { configs: eslintRecommended } = pkg;
@@ -23,11 +21,19 @@ export default [
         },
         plugins: {
             react: reactRecommended, // Add React plugin to recognize JSX
-            'react-hooks': reactHooks,
-            'jsx-a11y': jsxA11y,
         },
-        ...eslintRecommended.recommended,
-        ...reactRecommended,
+        settings: {
+            react: {
+              version: 'detect',
+            },
+          },
+          extends: [
+            'eslint:recommended',
+            'plugin:react/recommended', // Use recommended React linting rules
+            'plugin:react-hooks/recommended', // Use recommended React Hooks rules
+            'plugin:jsx-a11y/recommended', // Accessibility plugin for JSX
+          ],
+    
         rules: {
             'no-unused-vars': [
                 'warn',
