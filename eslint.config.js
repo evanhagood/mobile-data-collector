@@ -1,6 +1,5 @@
 import pkg from '@eslint/js';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
-import jsxA11y from 'eslint-plugin-jsx-a11y/configs/recommended.js';
 import globals from 'globals';
 
 const { configs: eslintRecommended } = pkg;
@@ -8,7 +7,6 @@ const { configs: eslintRecommended } = pkg;
 export default [
   eslintRecommended.recommended,
   reactRecommended, // React recommended config
-  jsxA11y, // JSX accessibility recommended config
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
@@ -25,7 +23,8 @@ export default [
     },
     plugins: {
       react: reactRecommended,
-      'react-hooks': 'eslint-plugin-react-hooks', // Enable React Hooks plugin
+      'react-hooks': 'eslint-plugin-react-hooks',
+      'jsx-a11y': 'eslint-plugin-jsx-a11y',
     },
     settings: {
       react: {
