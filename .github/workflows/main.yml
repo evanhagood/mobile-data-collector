@@ -2,35 +2,15 @@ name: CI setup
 
 on:
   push:
-    branches:
-      - "main"
-      - "dev"
-      - "US**"
   pull_request:
-    branches:
-      - "main"
-      - "dev"
-      - "US**"
 
 jobs:
-  prettier:
-    if: ${{ github.event.action != 'synchronize' }}
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.3
-        with:
-          prettier_options: --write **/*.{html,css,js,md} --config .prettierrc
-          only_changed: False
-          
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -40,5 +20,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint
-        run: npm run lint
+      - name: Run CI script
+        run: npm run ci

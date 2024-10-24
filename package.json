@@ -34,9 +34,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "cross-env CI=false react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
-    "lint": "eslint --config ./eslint.config.js ."
+    "lint": "eslint --config ./eslint.config.js .",
+    "ci": "npx prettier --write **/*.{html,css,js,md} --config .prettierrc && npm run lint && npm test"
   },
   "eslintConfig": {
     "extends": [
@@ -63,7 +64,10 @@
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.11.0",
+    "jest": "^27.5.1",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.21",
+    "prettier": "^3.3.3",
     "tailwind-scrollbar": "^2.0.1",
     "tailwindcss": "^3.2.4"
   }
