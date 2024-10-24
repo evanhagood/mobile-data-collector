@@ -10,7 +10,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { LoginWrapper } from './pages/LoginWrapper';
-import { getAnalytics } from 'firebase/analytics';  // Import Firebase Analytics
+import { getAnalytics } from 'firebase/analytics'; // Import Firebase Analytics
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -30,7 +30,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-const analytics = getAnalytics(app);  // Initialize Firebase Analytics
+const analytics = getAnalytics(app); // Initialize Firebase Analytics
 
 enableIndexedDbPersistence(db).catch((error) => {
     if (error.code === 'failed-precondition') {
