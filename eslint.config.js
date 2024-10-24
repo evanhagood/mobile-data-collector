@@ -7,8 +7,8 @@ import globals from 'globals';
 const { configs: eslintRecommended } = pkg;
 
 export default [
-  eslintRecommended.recommended,
-  reactRecommended, // React recommended config
+  eslintRecommended.recommended,  // Use recommended ESLint config
+  reactRecommended,  // React recommended config
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
@@ -24,9 +24,8 @@ export default [
       },
     },
     plugins: {
-      react: reactRecommended,
-      'react-hooks': reactHooks, // Include the react-hooks plugin
-      'jsx-a11y': jsxA11y, // Include the jsx-a11y plugin
+      'react-hooks': reactHooks,  // Only add react-hooks and jsx-a11y plugins
+      'jsx-a11y': jsxA11y,
     },
     settings: {
       react: {
