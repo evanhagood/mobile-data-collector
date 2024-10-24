@@ -1,49 +1,51 @@
 import pkg from '@eslint/js';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
-import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
+import eslintPluginImport from 'eslint-plugin-import/configs/recommended.js';
 
 const { configs: eslintRecommended } = pkg;
 
 export default [
-  eslintRecommended.recommended,  // Use recommended ESLint config
-  reactRecommended,  // React recommended config
-  {
-    files: ['**/*.{js,jsx}'],
-    languageOptions: {
-      ecmaVersion: 2021,
-      sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true, // Enable JSX support
+    {
+        files: ['**/*.{js,jsx}'],
+        languageOptions: {
+            ecmaVersion: 2021,
+            sourceType: 'module',
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true, // Ensure JSX is enabled
+                },
+            },
+            globals: {
+                ...globals.browser,
+            },
         },
-      },
-      globals: {
-        ...globals.browser, // Include browser globals like `window`, `document`
-      },
-    },
-    plugins: {
-      'react-hooks': reactHooks,  // Only add react-hooks and jsx-a11y plugins
-      'jsx-a11y': jsxA11y,
-    },
-    settings: {
-      react: {
-        version: 'detect', // Automatically detect the React version
-      },
-    },
-    rules: {
-      'no-unused-vars': [
-        'warn',
-        {
-          varsIgnorePattern: 'React', // Ignore React import in React 17+
+        plugins: {
+            react: reactRecommended, // Add React plugin to recognize JSX
+            import: eslintPluginImport, // Ensure correct import/export behavior
         },
-      ],
-      'react/react-in-jsx-scope': 'off', // Disable the need for React to be in scope
-      'react/jsx-uses-vars': 'error', // Ensure variables used in JSX are marked as used
-      'react-hooks/rules-of-hooks': 'error', // Rules of Hooks
-      'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
-      'jsx-a11y/anchor-is-valid': 'warn', // Accessibility rule for anchor elements
+        settings: {
+            react: {
+                version: 'detect', // Automatically detect the React version
+            },
+        },
+        ...eslintRecommended.recommended,
+        ...reactRecommended,
+        ...eslintPluginImport,
+        rules: {
+            'no-unused-vars': [
+                'warn',
+                {
+                    varsIgnorePattern: 'React', // Ignore React import in React 17+
+                },
+            ],
+            'react/react-in-jsx-scope': 'off', // Disable the need for React to be in scope (React 17+)
+            'react/jsx-uses-vars': 'error', // Ensure variables used in JSX are marked as used
+            'import/no-unresolved': 'error', // Ensure all imports can be resolved
+            'import/named': 'error', // Ensure named imports correspond to a named export
+            'no-console': 'warn', // Warn on console.log statements (can be changed to 'error' for stricter CI)
+            'react/prop-types': 'off', // Turn off prop-types rule if using TypeScript or modern React
+            'no-debugger': 'error', // Prevent the use of 'debugger' in production
+        },
     },
-  },
 ];
