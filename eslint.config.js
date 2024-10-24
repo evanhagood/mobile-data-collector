@@ -1,7 +1,6 @@
 import pkg from '@eslint/js';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
 import globals from 'globals';
-import eslintPluginImport from 'eslint-plugin-import/configs/recommended.js';
 
 const { configs: eslintRecommended } = pkg;
 
@@ -22,16 +21,18 @@ export default [
         },
         plugins: {
             react: reactRecommended, // Add React plugin to recognize JSX
-            import: eslintPluginImport, // Ensure correct import/export behavior
+            import: 'eslint-plugin-import', // Reference import plugin properly
         },
         settings: {
             react: {
                 version: 'detect', // Automatically detect the React version
             },
         },
-        ...eslintRecommended.recommended,
-        ...reactRecommended,
-        ...eslintPluginImport,
+        extends: [
+            'eslint:recommended',
+            'plugin:react/recommended',
+            'plugin:import/recommended', // Add this line instead of manually importing recommended.js
+        ],
         rules: {
             'no-unused-vars': [
                 'warn',
