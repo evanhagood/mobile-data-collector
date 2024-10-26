@@ -3,9 +3,20 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { motion } from 'framer-motion';
 import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 export const LoginWrapper = ({ children }) => {
     const [user, loading, error] = useAuthState(auth);
+    const analytics = getAnalytics();  // Get Analytics instance
+
+    // Log analytics event for login
+    const logAnalyticsEvent = (user) => {
+        logEvent(analytics, 'login', {
+            method: 'Google',
+            email: user.email,
+            uid: user.uid,
+        });
+    };
 
     // Check if the user is already authorized in Firestore
     const isAuthorizedUser = async (email) => {
@@ -34,23 +45,29 @@ export const LoginWrapper = ({ children }) => {
 
         try {
             const result = await signInWithPopup(auth, provider);
-            const email = result.user.email;
+            const user = result.user;
 
-            const isAuthorized = await isAuthorizedUser(email);
-            if (!isAuthorized) {
-                const passwordCorrect = await promptForPassword();
-                if (passwordCorrect) {
-                    await addUserToDatabase(email); // Register the user
-                    alert('You have been registered successfully!');
-                } else {
-                    await signOut(auth); // Logout if password is incorrect
-                    alert('Invalid password. You are not authorized.');
-                    return;
+            if (user.email.slice(-7) === 'asu.edu') {
+                const isAuthorized = await isAuthorizedUser(user.email);
+                if (!isAuthorized) {
+                    const passwordCorrect = await promptForPassword();
+                    if (passwordCorrect) {
+                        await addUserToDatabase(user.email); // Register user
+                        alert('Registered successfully!');
+                    } else {
+                        await signOut(auth);
+                        alert('Invalid password. Not authorized.');
+                        return;
+                    }
                 }
+                logAnalyticsEvent(user);  // Log analytics after authorization
+                alert('User logged in successfully!');
+            } else {
+                alert('Please use your ASU email.');
             }
         } catch (error) {
             console.error('Login failed:', error);
-            alert('Login failed: ' + error.message); // Notify of login failure
+            alert('Login failed: ' + error.message);
         }
     };
 
