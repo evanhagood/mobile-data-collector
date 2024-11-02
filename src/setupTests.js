@@ -14,8 +14,22 @@ jest.mock('firebase/auth');
 jest.mock('firebase/firestore');
 
 // Unit test for login with Google
+test('logs user in with Google and calls signInWithPopup', async () => {
+    const mockUser = { email: 'test@asu.edu', uid: '123' };
+    signInWithPopup.mockResolvedValueOnce({ user: mockUser });
+    
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    
+    expect(result.user.email).toBe('test@asu.edu');
+    expect(signInWithPopup).toHaveBeenCalledWith(auth, provider);
+});
 
 // Unit test for logout
+test('logs user out successfully', async () => {
+    await signOut(auth);
+    expect(signOut).toHaveBeenCalledWith(auth);
+});
 
 // Unit test for checking authorized user in Firestore
 
