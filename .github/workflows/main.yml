@@ -12,7 +12,6 @@ on:
       - "dev"
       - "US**"
 
-
 jobs:
   prettier:
     if: ${{ github.event.action != 'synchronize' }}
@@ -24,6 +23,5 @@ jobs:
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:
-          # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{html,css,js,md} --config .prettierrc
+          prettier_options: --check **/*.{html,css,js,md} --config .prettierrc
           only_changed: False
