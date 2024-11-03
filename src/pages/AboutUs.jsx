@@ -1,6 +1,10 @@
 export default function AboutUs() {
     const teams = [
         {
+            year: '2024-2025',
+            names: ['Quinten Knowles', 'Ayesha Arif', 'Timothy Weaver', 'Chase Molstad', 'Evan Hagood']
+        },
+        {
             year: '2022-2023',
             names: ['Isaiah Lathem', 'Ian Skelskey', 'Jack Norman', 'Dennis Grassl', 'Zachary Jacobson']
         },
@@ -17,6 +21,7 @@ export default function AboutUs() {
             names: ['Ashley Giamona', 'Edward Woelke', 'Joshua Owczarek', 'Matt Kharrl', 'Phil Soucheray']
         },
     ]
+    
     
     return (
         <div className='w-full overflow-y-scroll flex flex-col items-center'>
