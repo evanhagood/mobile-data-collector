@@ -32,6 +32,15 @@ test('logs user out successfully', async () => {
 });
 
 // Unit test for checking authorized user in Firestore
+test('checks if user is authorized in Firestore', async () => {
+    const mockQuerySnapshot = { empty: false };
+    getDocs.mockResolvedValueOnce(mockQuerySnapshot);
+
+    const authorizedUsersRef = collection(db, 'authorized_users');
+    const querySnapshot = await getDocs(authorizedUsersRef);
+
+    expect(querySnapshot.empty).toBe(false);  // User should exist
+});
 
 // Unit test for adding a new user to Firestore
 
