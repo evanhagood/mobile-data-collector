@@ -227,7 +227,11 @@ export default function ToeCodeInput({
      */
     const checkToeCodeValidity = useCallback(async () => {
         setIsValid(false);
-        if (toeCode.length < 2) {
+
+        if(toeCode.length == 0) {
+            setIsValid(true);
+            return; // we only want to close the modal if this is true here.. otherwise will we commit bad data to the DB.
+        } else if (toeCode.length < 2) {
             setIsValid(false);
             setOnCloseMsg('Toe Clip Code needs to be at least 2 characters long');
         } else if (toeCode.length % 2) {
@@ -383,6 +387,13 @@ export default function ToeCodeInput({
      * Updates the state with the found records and opens the recapture history modal.
      */
     const findPreviousLizardEntries = async () => {
+        if(speciesCode == null || speciesCode.length == 0) {
+            animationTimeout(
+                triggerErrorMsgAnimation,
+                'Please select a species code before continuing to history.'
+            );
+            return;
+        }
         setHistoryButtonText('Querying...');
         const collectionName =
             environment === 'live'
