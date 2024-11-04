@@ -46,7 +46,7 @@ test('checks if user is authorized in Firestore', async () => {
 test('adds new user to Firestore authorized_users collection', async () => {
     const authorizedUsersRef = collection(db, 'authorized_users');
     await addDoc(authorizedUsersRef, { email: 'newuser@asu.edu' });
-    
+
     expect(addDoc).toHaveBeenCalledWith(authorizedUsersRef, { email: 'newuser@asu.edu' });
 });
 
