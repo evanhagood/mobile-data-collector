@@ -39,12 +39,6 @@
     "lint": "eslint .",
     "ci": "npx prettier --write **/*.{html,css,js,md} --config .prettierrc && npm run lint && npm test"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
