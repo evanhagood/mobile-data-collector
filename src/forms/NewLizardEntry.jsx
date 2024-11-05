@@ -73,6 +73,10 @@ export default function NewLizardEntry() {
     }, [sex])
 
     useEffect(() => {
+        setToeCode('');
+    }, [speciesCode])
+
+    useEffect(() => {
         if (
             continueAnyways &&
             toeCode && 
@@ -142,6 +146,7 @@ export default function NewLizardEntry() {
                 isRecapture={isRecapture}
                 setIsRecapture={setIsRecapture}
             />
+            <span>(select species first)</span>
             <NumberInput 
                 label="SVL (mm)" 
                 value={svl} 
