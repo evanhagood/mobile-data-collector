@@ -2,7 +2,7 @@ import { auth, db } from '../index';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { motion } from 'framer-motion';
-import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
 export const LoginWrapper = ({ children }) => {
