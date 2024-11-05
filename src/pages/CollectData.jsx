@@ -20,7 +20,6 @@ export default function CollectData() {
     if (isEditingPrevious) {
       setCurrentForm('New Data Entry')
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

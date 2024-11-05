@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: CI setup
+=======
+name: CI
+>>>>>>> 403566965569fc24b47c2cdac4637c72b492a132
 
 on:
   push:
@@ -20,5 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+<<<<<<< HEAD
       - name: Run ESLint
         run: npm run lint
+=======
+      - name: Run CI script
+        run: npm run ci
+>>>>>>> 403566965569fc24b47c2cdac4637c72b492a132

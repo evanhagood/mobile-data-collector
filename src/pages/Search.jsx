@@ -100,6 +100,7 @@ export default function Search() {
                     setSites(tempSites);
                 }
             }
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
             console.error('Error fetching sites');
         }
@@ -129,6 +130,7 @@ export default function Search() {
                     setArrays(tempArrays);
                 }
             }
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
             console.error('Error fetching arrays');
         }
@@ -194,6 +196,7 @@ export default function Search() {
                     setSearchResults(filteredResults);
                 }
             }
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
             console.error('Error fetching lizard entries');
         }

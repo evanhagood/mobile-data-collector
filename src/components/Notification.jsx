@@ -14,7 +14,6 @@ export default function Notification() {
     if (notification !== '') {
         controls.start("visible").then(() => controls.start("hidden")).then(() => setNotification(''))
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ notification ])
 
   const containerVariant = {

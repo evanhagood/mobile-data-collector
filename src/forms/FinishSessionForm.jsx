@@ -63,7 +63,6 @@ export const FinishSessionForm = () => {
            setComments(pastSessionObj.commentsAboutTheArray)
            setTrapStatus(pastSessionObj.trapStatus)
        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isEditingPrevious])    
 
     const uploadSessionData = async (sessionObj) => {
@@ -378,7 +377,6 @@ export const FinishSessionForm = () => {
                 console.log(set)
                 for (const answer of set.answers) {
                     if (answer.primary === speciesCode) {
-                        // console.log(answer.secondary.Genus)
                         return [answer.secondary.Genus, answer.secondary.Species];
                     }
                 }
