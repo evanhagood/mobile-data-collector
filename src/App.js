@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, memo, useRef } from 'react';
 import { collection, doc, onSnapshot } from 'firebase/firestore';
 import CollectData from './pages/CollectData';
@@ -77,7 +75,7 @@ function App() {
             if (lastEditTime === snapshot.data().lastEditTime) setLizardDataLoaded(true);
         });
 
-        onSnapshot(collection(db, 'AnswerSet'), (snapshot) => {
+        onSnapshot(collection(db, 'AnswerSet'), () => {
             setAnswerSetLoading(false);
         });
     };

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useAtomValue, useSetAtom } from 'jotai';
 import { currentFormName, currentSessionData } from '../utils/jotai';
 
@@ -63,7 +62,7 @@ export default function NewDataEntry() {
                         tabIndex={0}
                         className="dropdown-content menu items-center p-2 shadow bg-white rounded-box text-xl border-asu-maroon border-2"
                     >
-                        {entryTypes.map((entry, index) => (
+                        {entryTypes.map((entry) => (
                             <li
                                 onClick={() => {
                                     document.activeElement.blur();

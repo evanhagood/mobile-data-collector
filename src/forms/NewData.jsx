@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import { collection, getDocsFromCache, where, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../index';
@@ -38,7 +38,6 @@ export default function NewData() {
             mammal: [],
             snake: [],
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getSites = async (projectName) => {

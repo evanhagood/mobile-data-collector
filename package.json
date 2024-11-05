@@ -34,14 +34,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "cross-env CI=false react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "test": "cross-env CI=false react-scripts test --passWithNoTests",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "ci": "npx prettier --write **/*.{html,css,js,md} --config .prettierrc && npm run lint && npm test"
   },
   "browserslist": {
     "production": [
@@ -58,7 +54,10 @@
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react": "^7.37.1",
     "postcss": "^8.4.21",
+    "prettier": "^3.3.3",
     "tailwind-scrollbar": "^2.0.1",
     "tailwindcss": "^3.2.4"
   }
