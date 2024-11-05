@@ -879,7 +879,7 @@ const LandscapeTable = ({
                     </tr>
                 </thead>
                 <tbody>
-                    {previousLizardEntries.map((entry, index, array) => {
+                    {previousLizardEntries.map((entry, index) => {
                         return (
                             <tr key={index}>
                                 {lizardHistoryLabelKeys.map((key, index, array) => {
