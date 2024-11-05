@@ -37,7 +37,7 @@
     "test": "cross-env CI=false react-scripts test --passWithNoTests",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "ci": "npx prettier --write **/*.{html,css,js,md} --config .prettierrc && npm run lint && npm test"
+    "ci": "npx prettier --write **/*.{html,css,js,md,jsx,json} --config .prettierrc && npm run lint && npm test"
   },
   "browserslist": {
     "production": [
