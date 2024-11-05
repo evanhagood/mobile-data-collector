@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { 
-    currentFormName, 
-    currentSessionData, 
-    notificationText, 
+import {
+    currentFormName,
+    currentSessionData,
+    notificationText,
     appMode,
     lizardDataLoadedAtom,
     lizardLastEditTime,
-    triggerUpdateOnLastEditTime
+    triggerUpdateOnLastEditTime,
 } from '../utils/jotai';
 import FormWrapper from '../components/FormWrapper';
 import Dropdown from '../components/Dropdown';
@@ -18,11 +18,11 @@ import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 import ConfirmationModal from '../components/ConfirmationModal';
 import { ScaleLoader } from 'react-spinners';
-import { 
+import {
     getLizardAnswerFormDataFromFirestore,
     completeLizardCapture,
-    verifyForm
-} from '../utils/functions'
+    verifyForm,
+} from '../utils/functions';
 
 export default function NewLizardEntry() {
     const lizardErrors = {
@@ -39,7 +39,7 @@ export default function NewLizardEntry() {
         sex: '',
         dead: '',
         comments: '',
-    }
+    };
     const [speciesCode, setSpeciesCode] = useState('');
     const [trap, setTrap] = useState('');
     const [isRecapture, setIsRecapture] = useState(false);
@@ -61,7 +61,7 @@ export default function NewLizardEntry() {
     const setCurrentForm = useSetAtom(currentFormName);
     const setNotification = useSetAtom(notificationText);
     const lizardDataLoaded = useAtomValue(lizardDataLoadedAtom);
-    const environment = useAtomValue(appMode)
+    const environment = useAtomValue(appMode);
     const setLastEditTime = useSetAtom(lizardLastEditTime);
     const [continueAnyways, setContinueAnyways] = useState(false);
     const setTriggerLastUpdate = useSetAtom(triggerUpdateOnLastEditTime);
@@ -70,38 +70,21 @@ export default function NewLizardEntry() {
         sex === 'Male' && setSex('M');
         sex === 'Female' && setSex('F');
         sex === 'Unknown' && setSex('U');
-    }, [sex])
+    }, [sex]);
 
     useEffect(() => {
         setToeCode('');
-    }, [speciesCode])
+    }, [speciesCode]);
 
     useEffect(() => {
-        if (
-            continueAnyways &&
-            toeCode && 
-            svl &&
-            vtl &&
-            otl &&
-            mass &&
-            sex
-        ) {
+        if (continueAnyways && toeCode && svl && vtl && otl && mass && sex) {
             setConfirmationModalIsOpen(true);
         }
-    }, [
-        continueAnyways, 
-        toeCode, 
-        svl, 
-        vtl,
-        otl,
-        mass,
-        sex
-    ])
+    }, [continueAnyways, toeCode, svl, vtl, otl, mass, sex]);
 
     const triggerLastEditUpdate = () => {
         setTriggerLastUpdate(true);
-    }
-
+    };
 
     const sexOptions = ['Male', 'Female', 'Unknown'];
 
@@ -110,16 +93,15 @@ export default function NewLizardEntry() {
     }, []);
 
     useEffect(() => {
-        if (otl > vtl && Number(otl) && Number(vtl)) setOtl(vtl)
-    }, [ vtl ])
-    
-    useEffect(() => {
-        if (!regenTail) setOtl('')
-    }, [ regenTail ])
+        if (otl > vtl && Number(otl) && Number(vtl)) setOtl(vtl);
+    }, [vtl]);
 
-    return (
-        ((lizardDataLoaded)) ?
-            <FormWrapper>
+    useEffect(() => {
+        if (!regenTail) setOtl('');
+    }, [regenTail]);
+
+    return lizardDataLoaded ? (
+        <FormWrapper>
             <Dropdown
                 value={speciesCode}
                 setValue={setSpeciesCode}
@@ -147,18 +129,18 @@ export default function NewLizardEntry() {
                 setIsRecapture={setIsRecapture}
             />
             <span>(select species first)</span>
-            <NumberInput 
-                label="SVL (mm)" 
-                value={svl} 
-                setValue={setSvl} 
-                placeholder="0 mm" 
+            <NumberInput
+                label="SVL (mm)"
+                value={svl}
+                setValue={setSvl}
+                placeholder="0 mm"
                 error={errors.svl}
             />
-            <NumberInput 
-                label="VTL (mm)" 
-                value={vtl} 
-                setValue={setVtl} 
-                placeholder="0 mm" 
+            <NumberInput
+                label="VTL (mm)"
+                value={vtl}
+                setValue={setVtl}
+                placeholder="0 mm"
                 error={errors.svl}
             />
             <SingleCheckbox prompt="Regen tail?" value={regenTail} setValue={setRegenTail} />
@@ -183,15 +165,18 @@ export default function NewLizardEntry() {
                 value={mass}
                 setValue={setMass}
                 placeholder={'0.0 g'}
-                inputValidation='mass'
+                inputValidation="mass"
             />
             <Dropdown
                 error={errors.sex}
                 value={`${
-                    sex === 'M' || sex === 'Male' ? 'Male' :
-                    sex === 'F' || sex === 'Female' ? 'Female' :
-                    sex === 'U' || sex === 'Unknown' ? 'Unknown' :
-                    sex
+                    sex === 'M' || sex === 'Male'
+                        ? 'Male'
+                        : sex === 'F' || sex === 'Female'
+                          ? 'Female'
+                          : sex === 'U' || sex === 'Unknown'
+                            ? 'Unknown'
+                            : sex
                 }`}
                 setValue={setSex}
                 placeholder="Sex"
@@ -204,9 +189,9 @@ export default function NewLizardEntry() {
                 value={comments}
                 setValue={setComments}
             />
-            <Button 
-                prompt="Finished?" 
-                clickHandler={() =>  {
+            <Button
+                prompt="Finished?"
+                clickHandler={() => {
                     if (regenTail) {
                         verifyForm(
                             lizardErrors,
@@ -222,8 +207,8 @@ export default function NewLizardEntry() {
                             setNotification,
                             setConfirmationModalIsOpen,
                             setErrors,
-                            setContinueAnyways
-                        )
+                            setContinueAnyways,
+                        );
                     } else {
                         verifyForm(
                             lizardErrors,
@@ -238,26 +223,27 @@ export default function NewLizardEntry() {
                             setNotification,
                             setConfirmationModalIsOpen,
                             setErrors,
-                            setContinueAnyways
-                        )
+                            setContinueAnyways,
+                        );
                     }
                 }}
             />
-            {continueAnyways && 
+            {continueAnyways && (
                 <div>
-                    <p className='text-xl'>Form has incomplete data, continue anyways?</p>
-                    <Button 
-                        prompt='Submit incomplete form'
+                    <p className="text-xl">Form has incomplete data, continue anyways?</p>
+                    <Button
+                        prompt="Submit incomplete form"
                         clickHandler={() => {
                             toeCode === '' && setToeCode('N/A');
                             svl === '' && setSvl('N/A');
                             vtl === '' && setVtl('N/A');
                             otl === '' && setOtl('N/A');
                             mass === '' && setMass('N/A');
-                            sex ===  '' && setSex('U');
+                            sex === '' && setSex('U');
                         }}
                     />
-                </div>}
+                </div>
+            )}
             {confirmationModalIsOpen && (
                 <ConfirmationModal
                     data={{
@@ -275,29 +261,31 @@ export default function NewLizardEntry() {
                         isDead,
                         comments,
                     }}
-                    completeCapture={() => completeLizardCapture(
-                        setCurrentData,
-                        currentData,
-                        setCurrentForm,
-                        {
-                            speciesCode,
-                            trap,
-                            isRecapture,
-                            toeCode,
-                            svl,
-                            vtl,
-                            regenTail,
-                            otl,
-                            isHatchling,
-                            mass,
-                            sex,
-                            isDead,
-                            comments,
-                        },
-                        environment,
-                        triggerLastEditUpdate,
-                        setLastEditTime,
-                    )}
+                    completeCapture={() =>
+                        completeLizardCapture(
+                            setCurrentData,
+                            currentData,
+                            setCurrentForm,
+                            {
+                                speciesCode,
+                                trap,
+                                isRecapture,
+                                toeCode,
+                                svl,
+                                vtl,
+                                regenTail,
+                                otl,
+                                isHatchling,
+                                mass,
+                                sex,
+                                isDead,
+                                comments,
+                            },
+                            environment,
+                            triggerLastEditUpdate,
+                            setLastEditTime,
+                        )
+                    }
                     setConfirmationModalIsOpen={setConfirmationModalIsOpen}
                     modalType="lizard"
                     resetFields={() => {
@@ -305,22 +293,15 @@ export default function NewLizardEntry() {
                         vtl === 'N/A' && setVtl('');
                         otl === 'N/A' && setOtl('');
                         mass === 'N/A' && setMass('');
-                        sex ===  'U' && setSex('');
+                        sex === 'U' && setSex('');
                     }}
                 />
             )}
         </FormWrapper>
-        :
+    ) : (
         <div>
-            <ScaleLoader
-                loading={true}
-                color={'#8C1D40'}
-                width={8}
-                radius={15}
-                height={40}
-            />
+            <ScaleLoader loading={true} color={'#8C1D40'} width={8} radius={15} height={40} />
             <p className="mt-10 text-black text-xl">Loading lizard data...</p>
         </div>
-        
     );
 }

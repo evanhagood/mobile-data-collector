@@ -7,7 +7,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 
 export const LoginWrapper = ({ children }) => {
     const [user, loading, error] = useAuthState(auth);
-    const analytics = getAnalytics();  // Get Analytics instance
+    const analytics = getAnalytics(); // Get Analytics instance
 
     // Log analytics event for login
     const logAnalyticsEvent = (user) => {
@@ -60,7 +60,7 @@ export const LoginWrapper = ({ children }) => {
                         return;
                     }
                 }
-                logAnalyticsEvent(user);  // Log analytics after authorization
+                logAnalyticsEvent(user); // Log analytics after authorization
                 alert('User logged in successfully!');
             } else {
                 alert('Please use your ASU email.');
@@ -83,14 +83,18 @@ export const LoginWrapper = ({ children }) => {
     } else if (error) {
         return (
             <motion.div className="font-openSans absolute bg-white inset-0 flex flex-col items-center justify-around">
-                <motion.p className="text-black text-3xl">Error signing in: {error.message}</motion.p>
+                <motion.p className="text-black text-3xl">
+                    Error signing in: {error.message}
+                </motion.p>
             </motion.div>
         );
     } else {
         return (
             <motion.div className="font-openSans absolute bg-white inset-0 flex flex-col items-center justify-around">
                 <motion.h1 className="text-black text-4xl">Welcome to Your App</motion.h1>
-                <p className='text-black text-xl text-center'>Logged in as {user ? user.email : 'none'}</p>
+                <p className="text-black text-xl text-center">
+                    Logged in as {user ? user.email : 'none'}
+                </p>
                 <motion.p className="text-black text-lg text-center">
                     Login with your ASU Google account to continue
                 </motion.p>
@@ -254,4 +258,3 @@ export class Authenticator {
     }
 
 */
-   

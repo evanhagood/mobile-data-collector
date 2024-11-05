@@ -46,7 +46,7 @@ export default function Search() {
             'Dead',
             'Comments',
         ],
-        []
+        [],
     );
 
     const searchTableColumnLabelKeys = useMemo(
@@ -66,7 +66,7 @@ export default function Search() {
             'dead',
             'comments',
         ],
-        []
+        [],
     );
 
     const getSites = async (projectName) => {
@@ -76,15 +76,18 @@ export default function Search() {
         try {
             if (projectName === 'Gateway') {
                 sitesSnapshot = await getDocsFromCache(
-                    query(collection(db, 'AnswerSet'), where('set_name', '==', 'GatewaySites'))
+                    query(collection(db, 'AnswerSet'), where('set_name', '==', 'GatewaySites')),
                 );
             } else if (projectName === 'San Pedro') {
                 sitesSnapshot = await getDocsFromCache(
-                    query(collection(db, 'AnswerSet'), where('set_name', '==', 'San PedroSites'))
+                    query(collection(db, 'AnswerSet'), where('set_name', '==', 'San PedroSites')),
                 );
             } else if (projectName === 'Virgin River') {
                 sitesSnapshot = await getDocsFromCache(
-                    query(collection(db, 'AnswerSet'), where('set_name', '==', 'Virgin RiverSites'))
+                    query(
+                        collection(db, 'AnswerSet'),
+                        where('set_name', '==', 'Virgin RiverSites'),
+                    ),
                 );
             }
             if (sitesSnapshot?.docs?.length > 0) {
@@ -115,7 +118,7 @@ export default function Search() {
 
         try {
             arraysSnapshot = await getDocsFromCache(
-                query(collection(db, 'AnswerSet'), where('set_name', '==', set_name))
+                query(collection(db, 'AnswerSet'), where('set_name', '==', set_name)),
             );
             if (arraysSnapshot?.docs?.length > 0) {
                 let tempArrays = [];
@@ -164,11 +167,11 @@ export default function Search() {
                     searchTableColumnLabels.some((label) => {
                         const entryValue = getValue(entry, label)?.toString().toLowerCase();
                         return entryValue.includes(term);
-                    })
+                    }),
                 );
             });
         },
-        [searchTableColumnLabels, searchTableColumnLabelKeys]
+        [searchTableColumnLabels, searchTableColumnLabelKeys],
     );
 
     const retrieveLizardEntries = async () => {
@@ -178,7 +181,7 @@ export default function Search() {
         const q = query(
             lizardDataRef,
             where('site', '==', currentSite),
-            where('array', '==', currentArray)
+            where('array', '==', currentArray),
         );
         try {
             const lizardEntriesSnapshot = await getDocsFromCache(q);
