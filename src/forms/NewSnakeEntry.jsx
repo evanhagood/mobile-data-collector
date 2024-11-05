@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
 import { collection, query, where, getDocsFromCache } from 'firebase/firestore';

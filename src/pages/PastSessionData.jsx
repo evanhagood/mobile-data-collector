@@ -42,27 +42,10 @@ export default function PastSessionData() {
         },
     };
 
-    // will delete all sessions that have been recorded before today - 
-    // disabled because of case where user might go multiple days without 
-    // syncing, but editing sessions after the initial day is disabled
-    // eslint-disable-next-line no-unused-vars
-    const deleteSessionsBeforeToday = () => {
-        const now = new Date();
-        const nowDateCode = `${now.getDate()}${now.getMonth()}${now.getFullYear()}`;
-        setPastData(
-            pastData.filter((value) => {
-                const sessionDate = new Date(value.sessionData.sessionEpochTime);
-                const sessionDateCode = `${sessionDate.getDate()}${sessionDate.getMonth()}${sessionDate.getFullYear()}`;
-                return (nowDateCode === sessionDateCode);
-            })
-        );
-    };
-
     useEffect(() => {
         setIsOpen(new Array(pastData.length).fill(false));
         setPastData(pastData.sort((a, b) => b.sessionData.sessionEpochTime - a.sessionData.sessionEpochTime))
-        // deleteSessionsBeforeToday();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, []);
 
     const getNumberCrittersRecorded = (critter) => {
@@ -262,44 +245,6 @@ export default function PastSessionData() {
             })}
         </motion.ul>
     );
-}
-
-const UploadStatusIndicator = ({session}) => {
-    if (session.uploaded) {
-        return (
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-10 h-10 stroke-green-600"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.5 12.75l6 6 9-13.5"
-                />
-            </svg>
-        ) 
-    } else {
-        return (
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-10 h-10 stroke-red-600"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                />
-            </svg>
-        )
-    }
 }
 
 const EntryTableRow = ({ entryType, entryNumber }) => {
