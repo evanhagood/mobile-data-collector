@@ -1,4 +1,3 @@
-
 import { collection, getDocsFromCache, where, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../index';
@@ -45,15 +44,15 @@ export default function NewData() {
         let sitesSnapshot = null;
         if (projectName === 'Gateway') {
             sitesSnapshot = await getDocsFromCache(
-                query(collection(db, 'AnswerSet'), where('set_name', '==', 'GatewaySites'))
+                query(collection(db, 'AnswerSet'), where('set_name', '==', 'GatewaySites')),
             );
         } else if (projectName === 'San Pedro') {
             sitesSnapshot = await getDocsFromCache(
-                query(collection(db, 'AnswerSet'), where('set_name', '==', 'San PedroSites'))
+                query(collection(db, 'AnswerSet'), where('set_name', '==', 'San PedroSites')),
             );
         } else if (projectName === 'Virgin River') {
             sitesSnapshot = await getDocsFromCache(
-                query(collection(db, 'AnswerSet'), where('set_name', '==', 'Virgin RiverSites'))
+                query(collection(db, 'AnswerSet'), where('set_name', '==', 'Virgin RiverSites')),
             );
         }
         if (sitesSnapshot) {
@@ -70,7 +69,7 @@ export default function NewData() {
         let arraysSnapshot = null;
         const set_name = `${projectName}${siteName}Array`;
         arraysSnapshot = await getDocsFromCache(
-            query(collection(db, 'AnswerSet'), where('set_name', '==', set_name))
+            query(collection(db, 'AnswerSet'), where('set_name', '==', set_name)),
         );
         if (arraysSnapshot.docs[0]) {
             let tempArrays = [];
@@ -93,8 +92,8 @@ export default function NewData() {
             if (tempErrors[key] !== '') errorExists = true;
         }
         if (errorExists) {
-            console.log(handler.length)
-            console.log(tempErrors)
+            console.log(handler.length);
+            console.log(tempErrors);
             setErrors(tempErrors);
             setNotification('Errors present');
             return;
@@ -244,20 +243,20 @@ export default function NewData() {
                     </li>
                 </ul>
             </div>
-                <div
-                    className="
+            <div
+                className="
           dropdown
           flex
           justify-center
           "
+            >
+                <label
+                    tabIndex={0}
+                    className="btn glass m-1 text-asu-maroon text-xl capitalize font-medium"
                 >
-                    <label
-                        tabIndex={0}
-                        className="btn glass m-1 text-asu-maroon text-xl capitalize font-medium"
-                    >
-                        {currentSite !== 'Site' ? `Site ${currentSite}` : currentSite}
-                    </label>
-                    {sites && 
+                    {currentSite !== 'Site' ? `Site ${currentSite}` : currentSite}
+                </label>
+                {sites && (
                     <ul
                         tabIndex={0}
                         className="
@@ -290,16 +289,16 @@ export default function NewData() {
                             </li>
                         ))}
                     </ul>
-                    }
-                </div>
-                <div className="dropdown flex justify-center">
-                    <label
-                        tabIndex={0}
-                        className="btn glass m-1 text-asu-maroon text-xl capitalize font-medium"
-                    >
-                        {currentArray !== 'Array' ? `Array ${currentArray}` : currentArray}
-                    </label>
-                {arrays && 
+                )}
+            </div>
+            <div className="dropdown flex justify-center">
+                <label
+                    tabIndex={0}
+                    className="btn glass m-1 text-asu-maroon text-xl capitalize font-medium"
+                >
+                    {currentArray !== 'Array' ? `Array ${currentArray}` : currentArray}
+                </label>
+                {arrays && (
                     <ul
                         tabIndex={0}
                         className="
@@ -328,25 +327,25 @@ export default function NewData() {
                             </li>
                         ))}
                     </ul>
-                    }
+                )}
+            </div>
+            <div className="flex flex-col justify-center items-center border-black border-0">
+                <p className="text-xl mb-1 text-asu-maroon font-semibold">Any captures?</p>
+                <div className="flex">
+                    <button
+                        onClick={() => currentArray !== 'Array' && finishForm('withCaptures')}
+                        className="btn w-28 mr-2 glass text-asu-maroon text-xl capitalize"
+                    >
+                        Yes
+                    </button>
+                    <button
+                        onClick={() => currentArray !== 'Array' && finishForm('withoutCaptures')}
+                        className="btn w-28 glass text-asu-maroon text-xl capitalize"
+                    >
+                        No
+                    </button>
                 </div>
-                <div className="flex flex-col justify-center items-center border-black border-0">
-                    <p className="text-xl mb-1 text-asu-maroon font-semibold">Any captures?</p>
-                    <div className="flex">
-                        <button
-                            onClick={() => currentArray !== 'Array' && finishForm('withCaptures')}
-                            className="btn w-28 mr-2 glass text-asu-maroon text-xl capitalize"
-                        >
-                            Yes
-                        </button>
-                        <button
-                            onClick={() => currentArray !== 'Array' && finishForm('withoutCaptures')}
-                            className="btn w-28 glass text-asu-maroon text-xl capitalize"
-                        >
-                            No
-                        </button>
-                    </div>
-                </div>
+            </div>
         </div>
     );
 }
