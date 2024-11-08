@@ -51,5 +51,16 @@ test('adds new user to Firestore authorized_users collection', async () => {
 });
 
 // Unit test for loading state in UI (LoginWrapper)
+test('displays loading message while user is authenticating', () => {
+    render(<LoginWrapper />);
+    expect(screen.getByText(/Authenticating user.../i)).toBeInTheDocument();
+});
 
 // Unit test for unauthenticated UI state (LoginWrapper)
+test('shows login prompt if not signed in', () => {
+    render(<LoginWrapper />);
+    const loginButton = screen.getByRole('button', { name: /Login/i });
+    fireEvent.click(loginButton);
+    
+    expect(screen.getByText(/Login with your ASU Google account to continue/i)).toBeInTheDocument();
+});
