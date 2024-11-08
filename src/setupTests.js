@@ -61,6 +61,6 @@ test('shows login prompt if not signed in', () => {
     render(<LoginWrapper />);
     const loginButton = screen.getByRole('button', { name: /Login/i });
     fireEvent.click(loginButton);
-    
+
     expect(screen.getByText(/Login with your ASU Google account to continue/i)).toBeInTheDocument();
 });
