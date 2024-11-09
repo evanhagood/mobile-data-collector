@@ -64,10 +64,12 @@ export default function NewArthropodEntry() {
             const fenceTrapsSnapshot = await getDocsFromCache(
                 query(collection(db, 'AnswerSet'), where('set_name', '==', 'Fence Traps'))
             );
-            let fenceTrapsArray = [];
+            let fenceTrapsArray = ['A4', 'B4', 'C4'];
+            /*
             for (const answer of fenceTrapsSnapshot.docs[0].data().answers) {
                 fenceTrapsArray.push(answer.primary);
             }
+                */
             setFenceTraps(fenceTrapsArray);
         };
         getAnswerFormDataFromFirestore();
