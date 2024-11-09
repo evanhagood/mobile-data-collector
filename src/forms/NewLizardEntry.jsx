@@ -241,9 +241,8 @@ export default function NewLizardEntry() {
             />
             {continueAnyways && 
                 <div>
-                    <p className='text-xl'>Form has incomplete data, continue anyways?</p>
                     <Button 
-                        prompt='Submit incomplete form'
+                        prompt='Submit form'
                         clickHandler={() => {
                             toeCode === '' && setToeCode('N/A');
                             svl === '' && setSvl('N/A');
