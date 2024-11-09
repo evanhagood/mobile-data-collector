@@ -137,6 +137,7 @@ export default function ToeCodeInput({
      */
     const generateNewToeCode = async () => {
         console.log(`Environment: ${environment}`);
+        console.log(currentData.array); // Test to verify that array is used in the toe code domain
         const collectionName =
             environment === 'live'
                 ? `${currentData.project.replace(/\s/g, '')}Data`
@@ -400,6 +401,7 @@ export default function ToeCodeInput({
                 ? `${currentData.project.replace(/\s/g, '')}Data`
                 : `Test${currentData.project.replace(/\s/g, '')}Data`;
         const lizardDataRef = collection(db, collectionName);
+        console.log(currentData.array); // Test to verify that array is used in the toe code domain
         const q = query(
             lizardDataRef,
             where('toeClipCode', '==', toeCode),
