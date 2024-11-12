@@ -166,7 +166,6 @@ export default function NewArthropodEntry() {
                     completeCapture={completeCapture}
                     setConfirmationModalIsOpen={setConfirmationModalIsOpen}
                     modalType="arthropod"
-                    // TODO: change to save user input when hitting go back.. currently everything is set to null:
                     resetFields={() => {
                         setTrap(trap);
                         setPredator(predator);
