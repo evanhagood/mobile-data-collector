@@ -168,10 +168,10 @@ export default function NewArthropodEntry() {
                     modalType="arthropod"
                     // TODO: change to save user input when hitting go back.. currently everything is set to null:
                     resetFields={() => {
-                        setTrap('');
-                        setPredator(false);
-                        setArthropodData({});
-                        setComments('');
+                        setTrap(trap);
+                        setPredator(predator);
+                        setArthropodData(arthropodData);
+                        setComments(comments);
                         setErrors({ trap: '' });
                     }}
                 />
