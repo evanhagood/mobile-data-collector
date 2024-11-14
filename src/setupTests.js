@@ -80,4 +80,3 @@ jest.mock('../utils/functions');
 // Unit test for form validation when submitting the form
 
 // Unit test for displaying loading spinner when lizard data has not loaded
-
