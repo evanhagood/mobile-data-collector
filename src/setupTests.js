@@ -64,3 +64,20 @@ test('shows login prompt if not signed in', () => {
 
     expect(screen.getByText(/Login with your ASU Google account to continue/i)).toBeInTheDocument();
 });
+
+// Mock necessary imports
+jest.mock('jotai');
+jest.mock('../utils/functions');
+
+// Unit test for rendering form elements in NewLizardEntry component
+
+// Unit test for loading lizard data from Firestore on component mount
+
+// Unit test for updating the `sex` state when selecting from the dropdown
+
+// Unit test for opening the confirmation modal when required conditions are met
+
+// Unit test for form validation when submitting the form
+
+// Unit test for displaying loading spinner when lizard data has not loaded
+
