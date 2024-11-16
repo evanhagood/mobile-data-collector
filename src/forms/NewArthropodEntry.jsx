@@ -164,6 +164,13 @@ export default function NewArthropodEntry() {
                     completeCapture={completeCapture}
                     setConfirmationModalIsOpen={setConfirmationModalIsOpen}
                     modalType="arthropod"
+                    resetFields={() => {
+                        setTrap(trap);
+                        setPredator(predator);
+                        setArthropodData(arthropodData);
+                        setComments(comments);
+                        setErrors({ trap: '' });
+                    }}
                 />
             )}
         </FormWrapper>
