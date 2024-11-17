@@ -14,9 +14,12 @@ import {
 } from '../utils/jotai';
 import Dropdown from '../components/Dropdown';
 import Button from '../components/Button';
+import UserManual from './UserManual.jsx'; 
 import { deleteLizardEntries } from '../utils/functions';
 
 export default function Home() {
+   
+    
     // eslint-disable-next-line no-unused-vars
     const [user, loading, error] = useAuthState(auth);
     const [environment, setEnvironment] = useAtom(appMode);
@@ -26,7 +29,7 @@ export default function Home() {
     const setPastEntryIndex = useSetAtom(pastEntryIndex);
     const [clearSessionConfirmationOpen, setClearSessionConfirmationOpen] = useState('');
     const setCurrentForm = useSetAtom(currentFormName);
-
+    const [isManualOpen, setIsManualOpen] = useState(false); 
     const clearCurrentSession = () => {
         setCurrentData({
             captureStatus: '',
@@ -73,15 +76,16 @@ export default function Home() {
 
     return (
         <motion.div>
-            <LayoutGroup>
-                <motion.h1 className="text-xl">Hello, {user && user.displayName}!</motion.h1>
-                <Button prompt={'Logout'} clickHandler={() => signOut(auth)} />
-                <Dropdown
-                    placeholder={'App mode'}
-                    value={environment}
-                    setValue={setEnvironment}
-                    options={['test', 'live']}
-                    clickHandler={(entry) => {
+        <LayoutGroup>
+            <motion.h1 className="text-xl">Hello, {user && user.displayName}!</motion.h1>
+            <Button prompt={'Logout'} clickHandler={() => signOut(auth)} />
+           
+            <Dropdown
+                placeholder={'App mode'}
+                value={environment}
+                setValue={setEnvironment}
+                options={['test', 'live']}
+                clickHandler={(entry) => {
                         setNotification(`App is now in ${entry} mode`);
                         setCurrentData({
                             captureStatus: '',
@@ -110,6 +114,7 @@ export default function Home() {
                         }
                     }}
                 />
+              
                 <AnimatePresence mode="popLayout">
                     {clearSessionConfirmationOpen && (
                         <motion.div
@@ -124,9 +129,17 @@ export default function Home() {
                                 prompt="No"
                                 clickHandler={() => setClearSessionConfirmationOpen(false)}
                             />
+                            
                         </motion.div>
                     )}
                 </AnimatePresence>
+                <div className="mt-4">
+                    <Button 
+                        prompt={'User Manual'} 
+                        clickHandler={() => setIsManualOpen(true)} 
+                    />
+                </div>
+                {isManualOpen && <UserManual onClose={() => setIsManualOpen(false)} />}
             </LayoutGroup>
         </motion.div>
     );
