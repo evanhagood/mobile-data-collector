@@ -169,7 +169,9 @@ export default function NewMammalEntry() {
                     />
                 </div>
             )}
-            {confirmationModalIsOpen && (
+
+
+              {confirmationModalIsOpen && (
                 <ConfirmationModal
                     data={{
                         speciesCode,
@@ -184,7 +186,7 @@ export default function NewMammalEntry() {
                     modalType="mammal"
                     resetFields={() => {
                         mass === 'N/A' && setMass('');
-                        sex === 'U' && setSex('');
+                        sex === 'U' && setSex('U');
                     }}
                 />
             )}
