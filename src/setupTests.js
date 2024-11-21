@@ -69,10 +69,33 @@ test('shows login prompt if not signed in', () => {
 jest.mock('jotai');
 jest.mock('../utils/functions');
 
+describe('NewLizardEntry Component', () => {
+// Set up mocks and initial atom values
+    beforeEach(() => {
+        useAtomValue.mockReturnValue(true); // mock lizardDataLoaded and environment
+        useSetAtom.mockReturnValue(jest.fn()); // mock set atom functions
+        getLizardAnswerFormDataFromFirestore.mockClear();
+        completeLizardCapture.mockClear();
+        verifyForm.mockClear();
+    });
+
 // Unit test for rendering form elements in NewLizardEntry component
-
+    it('renders the form elements', () => {
+        render(<NewLizardEntry />);
+        // Check that the basic form elements are rendered
+        expect(screen.getByPlaceholderText('Species Code')).toBeInTheDocument();
+        expect(screen.getByText('Is it a recapture?')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('0 mm')).toBeInTheDocument();
+        expect(screen.getByText('Finished?')).toBeInTheDocument();
+    });
+    
 // Unit test for loading lizard data from Firestore on component mount
-
+    it('loads lizard data from Firestore on mount', async () => {
+        render(<NewLizardEntry />);
+        await waitFor(() => {
+            expect(getLizardAnswerFormDataFromFirestore).toHaveBeenCalledTimes(1);
+        });
+    });
 // Unit test for updating the `sex` state when selecting from the dropdown
 
 // Unit test for opening the confirmation modal when required conditions are met
@@ -80,3 +103,4 @@ jest.mock('../utils/functions');
 // Unit test for form validation when submitting the form
 
 // Unit test for displaying loading spinner when lizard data has not loaded
+}
