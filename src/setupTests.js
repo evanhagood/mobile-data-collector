@@ -70,7 +70,7 @@ jest.mock('jotai');
 jest.mock('../utils/functions');
 
 describe('NewLizardEntry Component', () => {
-// Set up mocks and initial atom values
+    // Set up mocks and initial atom values
     beforeEach(() => {
         useAtomValue.mockReturnValue(true); // mock lizardDataLoaded and environment
         useSetAtom.mockReturnValue(jest.fn()); // mock set atom functions
@@ -79,7 +79,7 @@ describe('NewLizardEntry Component', () => {
         verifyForm.mockClear();
     });
 
-// Unit test for rendering form elements in NewLizardEntry component
+    // Unit test for rendering form elements in NewLizardEntry component
     it('renders the form elements', () => {
         render(<NewLizardEntry />);
         // Check that the basic form elements are rendered
@@ -89,18 +89,18 @@ describe('NewLizardEntry Component', () => {
         expect(screen.getByText('Finished?')).toBeInTheDocument();
     });
 
-// Unit test for loading lizard data from Firestore on component mount
+    // Unit test for loading lizard data from Firestore on component mount
     it('loads lizard data from Firestore on mount', async () => {
         render(<NewLizardEntry />);
         await waitFor(() => {
             expect(getLizardAnswerFormDataFromFirestore).toHaveBeenCalledTimes(1);
         });
     });
-// Unit test for updating the `sex` state when selecting from the dropdown
+    // Unit test for updating the `sex` state when selecting from the dropdown
 
-// Unit test for opening the confirmation modal when required conditions are met
+    // Unit test for opening the confirmation modal when required conditions are met
 
-// Unit test for form validation when submitting the form
+    // Unit test for form validation when submitting the form
 
-// Unit test for displaying loading spinner when lizard data has not loaded
+    // Unit test for displaying loading spinner when lizard data has not loaded
 });
