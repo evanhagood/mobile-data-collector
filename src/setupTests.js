@@ -97,9 +97,24 @@ describe('NewLizardEntry Component', () => {
         });
     });
     // Unit test for updating the `sex` state when selecting from the dropdown
-
+    it('updates `sex` state correctly', () => {
+        render(<NewLizardEntry />);
+        
+        // Set the sex dropdown and check expected changes
+        fireEvent.change(screen.getByPlaceholderText('Sex'), { target: { value: 'Female' } });
+        expect(screen.getByPlaceholderText('Sex').value).toBe('Female');
+    });
+    
     // Unit test for opening the confirmation modal when required conditions are met
-
+    it('opens confirmation modal when criteria are met', () => {
+        render(<NewLizardEntry />);
+        
+        // Simulate criteria to open confirmation modal
+        fireEvent.click(screen.getByText('Finished?'));
+        
+        expect(screen.getByText('Form has incomplete data, continue anyways?')).toBeInTheDocument();
+    });
+    
     // Unit test for form validation when submitting the form
 
     // Unit test for displaying loading spinner when lizard data has not loaded
