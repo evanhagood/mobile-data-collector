@@ -88,7 +88,7 @@ describe('NewLizardEntry Component', () => {
         expect(screen.getByPlaceholderText('0 mm')).toBeInTheDocument();
         expect(screen.getByText('Finished?')).toBeInTheDocument();
     });
-    
+
 // Unit test for loading lizard data from Firestore on component mount
     it('loads lizard data from Firestore on mount', async () => {
         render(<NewLizardEntry />);
@@ -103,4 +103,4 @@ describe('NewLizardEntry Component', () => {
 // Unit test for form validation when submitting the form
 
 // Unit test for displaying loading spinner when lizard data has not loaded
-}
+});
