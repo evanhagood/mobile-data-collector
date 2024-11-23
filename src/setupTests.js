@@ -118,19 +118,19 @@ describe('NewLizardEntry Component', () => {
     // Unit test for form validation when submitting the form
     it('triggers form validation on submit', () => {
         render(<NewLizardEntry />);
-        
+
         // Click 'Finished?' button to submit form
         fireEvent.click(screen.getByText('Finished?'));
 
         // Verify that `verifyForm` is called with expected arguments
         expect(verifyForm).toHaveBeenCalled();
     });
-    
+
     // Unit test for displaying loading spinner when lizard data has not loaded
     it('displays loading spinner when lizard data is not yet loaded', () => {
         useAtomValue.mockReturnValue(false); // Mock `lizardDataLoaded` as false
         render(<NewLizardEntry />);
-        
+
         expect(screen.getByText('Loading lizard data...')).toBeInTheDocument();
     });
 });
