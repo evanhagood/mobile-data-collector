@@ -149,7 +149,7 @@ export default function ToeCodeInput({
             ),
         );
         console.log(
-            `${collectionName} from site ${currentData.site} and array ${currentData.array} with species code ${speciesCode}`,
+            `${collectionName} from site ${currentData.site} with species code ${speciesCode}`,
         );
         const toeCodesArray = [];
         lizardSnapshot.docs.forEach((document) => {
