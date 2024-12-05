@@ -145,7 +145,6 @@ export default function ToeCodeInput({
             query(
                 collection(db, collectionName),
                 where('site', '==', currentData.site),
-                where('array', '==', currentData.array),
                 where('speciesCode', '==', speciesCode),
             ),
         );
@@ -247,7 +246,6 @@ export default function ToeCodeInput({
                     collection(db, collectionName),
                     where('toeClipCode', '==', toeCode),
                     where('site', '==', currentData.site),
-                    where('array', '==', currentData.array),
                     where('speciesCode', '==', speciesCode),
                 ),
             );
@@ -404,7 +402,6 @@ export default function ToeCodeInput({
             lizardDataRef,
             where('toeClipCode', '==', toeCode),
             where('site', '==', currentData.site),
-            where('array', '==', currentData.array),
             where('speciesCode', '==', speciesCode),
         );
         const lizardEntriesSnapshot = await getDocsFromCache(q);

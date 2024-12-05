@@ -181,7 +181,6 @@ export default function Search() {
         const q = query(
             lizardDataRef,
             where('site', '==', currentSite),
-            where('array', '==', currentArray),
         );
         try {
             const lizardEntriesSnapshot = await getDocsFromCache(q);
