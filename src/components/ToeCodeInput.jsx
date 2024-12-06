@@ -59,7 +59,7 @@ export default function ToeCodeInput({
                 },
             },
         }),
-        []
+        [],
     );
 
     /**
@@ -84,7 +84,7 @@ export default function ToeCodeInput({
             };
             checkIsAnimating();
         },
-        [errorMsgVariant]
+        [errorMsgVariant],
     );
 
     /**
@@ -110,7 +110,7 @@ export default function ToeCodeInput({
             await errorMsgControls.start('hidden');
             isAnimating.current = false;
         },
-        [errorMsgControls]
+        [errorMsgControls],
     );
 
     // Letters and numbers available for selection in the toe code input.
@@ -157,7 +157,7 @@ export default function ToeCodeInput({
         });
         console.log('Existing toe codes: ' + toeCodesArray);
         const toeCodesTemplateSnapshot = await getDocsFromCache(
-            query(collection(db, 'AnswerSet'), where('set_name', '==', 'toe clip codes'))
+            query(collection(db, 'AnswerSet'), where('set_name', '==', 'toe clip codes')),
         );
 
         // Make sure toe code is in correct order.
@@ -227,7 +227,7 @@ export default function ToeCodeInput({
     const checkToeCodeValidity = useCallback(async () => {
         setIsValid(false);
 
-        if(toeCode.length == 0) {
+        if (toeCode.length == 0) {
             setIsValid(true);
             return; // we only want to close the modal if this is true here.. otherwise will we commit bad data to the DB.
         } else if (toeCode.length < 2) {
@@ -246,9 +246,8 @@ export default function ToeCodeInput({
                     collection(db, collectionName),
                     where('toeClipCode', '==', toeCode),
                     where('site', '==', currentData.site),
-                    where('array', '==', currentData.array),
-                    where('speciesCode', '==', speciesCode)
-                )
+                    where('speciesCode', '==', speciesCode),
+                ),
             );
 
             // Check if code includes special toes C4 of D4.
@@ -256,7 +255,7 @@ export default function ToeCodeInput({
             if (tempToeArray.includes('C4') || tempToeArray.includes('D4')) {
                 animationTimeout(
                     triggerErrorMsgAnimation,
-                    'Warning: This code contains special toes, which should not be clipped.'
+                    'Warning: This code contains special toes, which should not be clipped.',
                 );
                 setIsValid(true);
             }
@@ -266,14 +265,14 @@ export default function ToeCodeInput({
                     setIsValid(true);
                 } else {
                     setOnCloseMsg(
-                        'Toe Clip Code is not previously recorded, please uncheck the recapture box to record a new entry'
+                        'Toe Clip Code is not previously recorded, please uncheck the recapture box to record a new entry',
                     );
                     setIsValid(false);
                 }
             } else {
                 if (lizardSnapshot.size > 0) {
                     setOnCloseMsg(
-                        'Toe Clip Code is already taken, choose another or check recapture box'
+                        'Toe Clip Code is already taken, choose another or check recapture box',
                     );
                     setIsValid(false);
                 } else {
@@ -306,7 +305,7 @@ export default function ToeCodeInput({
                 if (toeCode.length === 0) {
                     animationTimeout(
                         triggerErrorMsgAnimation,
-                        'Error: Toe Clip Codes must begin with a letter'
+                        'Error: Toe Clip Codes must begin with a letter',
                     );
                     return;
                 }
@@ -318,7 +317,7 @@ export default function ToeCodeInput({
                     ) {
                         animationTimeout(
                             triggerErrorMsgAnimation,
-                            'Error: You entered the same toe twice.'
+                            'Error: You entered the same toe twice.',
                         );
                         return;
                     }
@@ -347,13 +346,13 @@ export default function ToeCodeInput({
                         if (source < toeCode.charAt(toeCode.length - 2)) {
                             animationTimeout(
                                 triggerErrorMsgAnimation,
-                                'Error: Letters must be in alphabetical order'
+                                'Error: Letters must be in alphabetical order',
                             );
                             return;
                         } else {
                             animationTimeout(
                                 triggerErrorMsgAnimation,
-                                'Warning: You should only clip one toe per foot. Are these toes already missing?'
+                                'Warning: You should only clip one toe per foot. Are these toes already missing?',
                             );
                         }
                     }
@@ -386,10 +385,10 @@ export default function ToeCodeInput({
      * Updates the state with the found records and opens the recapture history modal.
      */
     const findPreviousLizardEntries = async () => {
-        if(speciesCode == null || speciesCode.length == 0) {
+        if (toeCode == null || toeCode.length == 0) {
             animationTimeout(
                 triggerErrorMsgAnimation,
-                'Please select a species code before continuing to history.'
+                'Please enter a toe code before continuing to history.',
             );
             return;
         }
@@ -403,8 +402,7 @@ export default function ToeCodeInput({
             lizardDataRef,
             where('toeClipCode', '==', toeCode),
             where('site', '==', currentData.site),
-            where('array', '==', currentData.array),
-            where('speciesCode', '==', speciesCode)
+            where('speciesCode', '==', speciesCode),
         );
         const lizardEntriesSnapshot = await getDocsFromCache(q);
         let tempArray = [];
@@ -503,12 +501,18 @@ export default function ToeCodeInput({
                     )}
                 </AnimatePresence>
 
-                <label
-                    htmlFor="my-modal-4"
-                    className="btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50"
-                >
-                    {toeCode ? `Toe-Clip Code: ${toeCode}` : 'Toe-Clip Code'}
-                </label>
+                {speciesCode ? (
+                    <label
+                        htmlFor="my-modal-4"
+                        className="btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50"
+                    >
+                        {toeCode ? `Toe-Clip Code: ${toeCode}` : 'Toe-Clip Code'}
+                    </label>
+                ) : (
+                    <label className="btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50">
+                        Toe-Clip Code
+                    </label>
+                )}
 
                 <input
                     type="checkbox"
@@ -560,7 +564,7 @@ export default function ToeCodeInput({
                                         height="72"
                                         width="50"
                                         viewBox="0 0 500 500"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                        xmlns="https://www.w3.org/2000/svg"
                                     >
                                         <path
                                             fillRule="nonzero"
@@ -606,7 +610,7 @@ export default function ToeCodeInput({
                                             onClick={() =>
                                                 animationTimeout(
                                                     triggerErrorMsgAnimation,
-                                                    onCloseMsg
+                                                    onCloseMsg,
                                                 )
                                             }
                                         >
@@ -761,7 +765,7 @@ const PortraitTable = ({
                                     let itemToDisplay = '';
                                     if (key === 'dateTime') {
                                         const date = new Date(
-                                            previousLizardEntries[i][key]
+                                            previousLizardEntries[i][key],
                                         ).toLocaleDateString();
                                         itemToDisplay = date;
                                     } else {
@@ -789,7 +793,7 @@ const PortraitTable = ({
                                                 }`}
                                             >
                                                 {itemToDisplay}
-                                            </td>
+                                            </td>,
                                         );
                                     } else {
                                         tdArray.push(
@@ -802,7 +806,7 @@ const PortraitTable = ({
                                                 }`}
                                             >
                                                 {itemToDisplay}
-                                            </td>
+                                            </td>,
                                         );
                                     }
                                 }
@@ -878,7 +882,7 @@ const LandscapeTable = ({
                     </tr>
                 </thead>
                 <tbody>
-                    {previousLizardEntries.map((entry, index, array) => {
+                    {previousLizardEntries.map((entry, index) => {
                         return (
                             <tr key={index}>
                                 {lizardHistoryLabelKeys.map((key, index, array) => {
