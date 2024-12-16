@@ -141,12 +141,13 @@ export default function UserManual({ onClose }) {
                                     alt="New Data Entry Screen" 
                                     className="rounded-lg shadow-md mx-auto"
                                 />
-                                 <p className="text-center -600 mt-2">
-                                    To add new entries Select Form select taxa add counts.<br></br>
-                                    once complete choose end session.<br></br>
-                                    
-                                </p>
-                             
+                              
+                                <div className="bg-blue-50 rounded-lg p-4 mt-6">
+            <p className="font-semibold">Tip:</p>
+            <p> To add new entries Select Form select taxa add counts.<br></br>
+            once complete choose end session. .</p><br></br>
+        </div>
+                
                             </div>
                             <img 
                             src="/manualImages/verify.png" 
@@ -158,7 +159,10 @@ export default function UserManual({ onClose }) {
                                     Verify Data is correct before submission.
                                 </p>
                         </div>
-
+                        <div className="bg-blue-50 rounded-lg p-4 mt-6">
+            <p className="font-semibold">Tip:</p>
+            <p>Errors on the Verify screen should be resolved by using the back button to make corrections.</p><br></br>
+        </div>
                         <div className="bg-white rounded-lg border p-6 mt-6">
                             <h3 className="text-xl font-semibold mb-4">Species Entry Form</h3>
                             <div className="mt-6">
@@ -167,9 +171,12 @@ export default function UserManual({ onClose }) {
                                     alt="Mammal Entry Form" 
                                     className="rounded-lg shadow-md mx-auto"
                                 />
-                                <p className="text-center mt-2">
-                                complete forms as much as possible.
-                                </p>
+                                                   <div className="bg-blue-50 rounded-lg p-4 mt-6">
+            <p className="font-semibold">Tip:</p>
+            <p> Comments and dead are optional.All other entries are required.<br></br>
+            Sex can be male female or unknown .</p><br></br>
+            If unable to finish verify all mandatory selections are made.
+        </div>
                             </div>
                         </div>
 
@@ -192,7 +199,8 @@ export default function UserManual({ onClose }) {
                             <div className="bg-yellow-50 rounded-lg p-4 mt-6">
                                 <p className="font-semibold">Important:</p>
                                 <p>Always verify your entries in the confirmation screen
-                                before submitting data. Once submitted, modifications must be made
+                                before submitting data. 
+                                <br></br>**Once submitted, modifications must be made
                                 through the History page.</p>
                             </div>
                         </div>
@@ -206,7 +214,7 @@ export default function UserManual({ onClose }) {
                                 <li>Select "End Session" when finished with data collection</li>
                                 <li>Review the number of critters recorded</li>
                                 <li>Confirm your intention to close the session</li>
-                                <li>Note that closed sessions can be accessed later through the History page</li>
+                                <li>**Note that closed sessions can be accessed later through the History page to edit or add</li>
                             </ol>
 
                             <div className="mt-6">
@@ -215,9 +223,13 @@ export default function UserManual({ onClose }) {
                                     alt="History Screen" 
                                     className="rounded-lg shadow-md mx-auto"
                                 />
-                                <p className="text-center text-gray-600 mt-2">
-                                    Session overview with completion confirmation dialog
-                                </p>
+                                <div className="bg-yellow-50 rounded-lg p-4 mt-6">
+                                <p className="font-semibold">Important:</p>
+                                <p>Always verify your entries in the confirmation screen
+                                before submitting data. 
+                                <br></br>Once submitted, modifications must be made
+                                through the History page.</p>
+                            </div>
                             </div>
                         </div>
                     </section>
