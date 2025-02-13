@@ -232,14 +232,20 @@ export const verifyForm = (
     let errorExists = false;
     for (const key in entryData) {
         if (entryData[key] === '') {
-            tempErrors[key] = 'Required';
+            tempErrors[key] = 'Incomplete';
             errorExists = true;
         } else if (entryData[key] === '0') {
             tempErrors[key] = 'Must not be 0';
         }
     }
-    if (entryData.speciesCode !== '' && entryData.trap !== '') {
+    if (entryData.speciesCode !== '' && entryData.trap !== '' && errorExists) {
         setContinueAnyways(true);
+    }
+    if (entryData.speciesCode === '')  {
+        tempErrors.speciesCode = 'Required';
+    }
+    if (entryData.trap === '')  {
+        tempErrors.trap = 'Required';
     }
     if (errorExists) {
         setNotification('Errors in form');
