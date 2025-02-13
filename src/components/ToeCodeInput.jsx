@@ -12,7 +12,7 @@ export default function ToeCodeInput({
     speciesCode,
     isRecapture,
     setIsRecapture,
-    error
+    error,
 }) {
     // Initialize component state
     const [selected, setSelected] = useState({
@@ -124,12 +124,12 @@ export default function ToeCodeInput({
      */
     const formattedToeCodes = toeCode
         ? toeCode.split('').reduce((total, current, index, array) => {
-            if (index % 2 && index < array.length - 1) {
-                return `${total}${current}-`;
-            } else {
-                return `${total}${current}`;
-            }
-        })
+              if (index % 2 && index < array.length - 1) {
+                  return `${total}${current}-`;
+              } else {
+                  return `${total}${current}`;
+              }
+          })
         : 'EX: A1-B2-C3';
 
     /**
@@ -507,15 +507,13 @@ export default function ToeCodeInput({
                         htmlFor="my-modal-4"
                         className={
                             error
-                                ? "inline-block capitalize text-xl text-black bg-white border-2 border-red-600 p-2 rounded-xl font-normal hover:bg-white/50 cursor-pointer"
-                                : "btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50"
+                                ? 'inline-block capitalize text-xl text-black bg-white border-2 border-red-600 p-2 rounded-xl font-normal hover:bg-white/50 cursor-pointer'
+                                : 'btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50'
                         }
                     >
                         <div>
                             {error && (
-                                <p className="text-sm text-red-600 font-bold mb-1">
-                                    {error}
-                                </p>
+                                <p className="text-[17px] text-red-600 font-bold mb-1">{error}</p>
                             )}
                             <p>{toeCode ? `Toe-Clip Code: ${toeCode}` : 'Toe-Clip Code'}</p>
                         </div>
@@ -526,12 +524,7 @@ export default function ToeCodeInput({
                     </label>
                 )}
 
-
-                <input
-                    type="checkbox"
-                    id="my-modal-4"
-                    className="modal-toggle"
-                />
+                <input type="checkbox" id="my-modal-4" className="modal-toggle" />
 
                 <motion.div className="modal z-40">
                     <div className="modal-box  w-11/12  max-w-sm bg-white border-asu-maroon border-2 flex flex-col items-center justify-between min-h-screen max-h-screen p-1">
@@ -741,10 +734,11 @@ const PortraitTable = ({
                             return (
                                 <tr key={item}>
                                     <td
-                                        className={`${index < array.length - 1
-                                            ? 'border-b border-black whitespace-nowrap'
-                                            : ''
-                                            }`}
+                                        className={`${
+                                            index < array.length - 1
+                                                ? 'border-b border-black whitespace-nowrap'
+                                                : ''
+                                        }`}
                                     >
                                         {item}
                                     </td>
@@ -796,10 +790,11 @@ const PortraitTable = ({
                                         tdArray.push(
                                             <td
                                                 key={`${itemToDisplay}${i}`}
-                                                className={`${labelIndex < array.length - 1
-                                                    ? 'border-b border-r border-black'
-                                                    : 'border-r border-black'
-                                                    }`}
+                                                className={`${
+                                                    labelIndex < array.length - 1
+                                                        ? 'border-b border-r border-black'
+                                                        : 'border-r border-black'
+                                                }`}
                                             >
                                                 {itemToDisplay}
                                             </td>,
@@ -808,10 +803,11 @@ const PortraitTable = ({
                                         tdArray.push(
                                             <td
                                                 key={`${itemToDisplay}${i}`}
-                                                className={`${labelIndex < array.length - 1
-                                                    ? 'border-b border-black'
-                                                    : 'border-black'
-                                                    }`}
+                                                className={`${
+                                                    labelIndex < array.length - 1
+                                                        ? 'border-b border-black'
+                                                        : 'border-black'
+                                                }`}
                                             >
                                                 {itemToDisplay}
                                             </td>,

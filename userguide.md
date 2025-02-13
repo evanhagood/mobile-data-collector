@@ -87,6 +87,3 @@ Feedback: Provide feedback through the app to help improve future versions.
 11. Glossary
 
 Terms & Definitions: Definitions for technical terms and key features (e.g., Capture Mark-Recapture, Service Workers).
-
-
-

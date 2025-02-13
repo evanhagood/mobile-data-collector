@@ -173,14 +173,15 @@ export default function NewLizardEntry() {
             />
             <Dropdown
                 error={errors.sex}
-                value={`${sex === 'M' || sex === 'Male'
-                    ? 'Male'
-                    : sex === 'F' || sex === 'Female'
-                        ? 'Female'
-                        : sex === 'U' || sex === 'Unknown'
+                value={`${
+                    sex === 'M' || sex === 'Male'
+                        ? 'Male'
+                        : sex === 'F' || sex === 'Female'
+                          ? 'Female'
+                          : sex === 'U' || sex === 'Unknown'
                             ? 'Unknown'
                             : sex
-                    }`}
+                }`}
                 setValue={setSex}
                 placeholder="Sex"
                 options={sexOptions}
@@ -233,7 +234,8 @@ export default function NewLizardEntry() {
                             );
                         }
                     }}
-                />)}
+                />
+            )}
             {continueAnyways && (
                 <div>
                     <p className="text-xl">Form has incomplete data, continue anyways?</p>

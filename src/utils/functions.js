@@ -241,10 +241,10 @@ export const verifyForm = (
     if (entryData.speciesCode !== '' && entryData.trap !== '' && errorExists) {
         setContinueAnyways(true);
     }
-    if (entryData.speciesCode === '')  {
+    if (entryData.speciesCode === '') {
         tempErrors.speciesCode = 'Required';
     }
-    if (entryData.trap === '')  {
+    if (entryData.trap === '') {
         tempErrors.trap = 'Required';
     }
     if (errorExists) {

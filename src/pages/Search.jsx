@@ -178,10 +178,7 @@ export default function Search() {
         const collectionName =
             environment === 'live' ? `${currentProject}Data` : `Test${currentProject}Data`;
         const lizardDataRef = collection(db, collectionName);
-        const q = query(
-            lizardDataRef,
-            where('site', '==', currentSite),
-        );
+        const q = query(lizardDataRef, where('site', '==', currentSite));
         try {
             const lizardEntriesSnapshot = await getDocsFromCache(q);
             console.log(environment);
