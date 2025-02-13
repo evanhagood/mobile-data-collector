@@ -170,8 +170,7 @@ export default function NewMammalEntry() {
                 </div>
             )}
 
-
-              {confirmationModalIsOpen && (
+            {confirmationModalIsOpen && (
                 <ConfirmationModal
                     data={{
                         speciesCode,
