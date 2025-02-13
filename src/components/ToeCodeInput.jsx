@@ -12,6 +12,7 @@ export default function ToeCodeInput({
     speciesCode,
     isRecapture,
     setIsRecapture,
+    error
 }) {
     // Initialize component state
     const [selected, setSelected] = useState({
@@ -123,12 +124,12 @@ export default function ToeCodeInput({
      */
     const formattedToeCodes = toeCode
         ? toeCode.split('').reduce((total, current, index, array) => {
-              if (index % 2 && index < array.length - 1) {
-                  return `${total}${current}-`;
-              } else {
-                  return `${total}${current}`;
-              }
-          })
+            if (index % 2 && index < array.length - 1) {
+                return `${total}${current}-`;
+            } else {
+                return `${total}${current}`;
+            }
+        })
         : 'EX: A1-B2-C3';
 
     /**
@@ -504,9 +505,20 @@ export default function ToeCodeInput({
                 {speciesCode ? (
                     <label
                         htmlFor="my-modal-4"
-                        className="btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50"
+                        className={
+                            error
+                                ? "inline-block capitalize text-xl text-black bg-white border-2 border-red-600 p-2 rounded-xl font-normal hover:bg-white/50 cursor-pointer"
+                                : "btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50"
+                        }
                     >
-                        {toeCode ? `Toe-Clip Code: ${toeCode}` : 'Toe-Clip Code'}
+                        <div>
+                            {error && (
+                                <p className="text-sm text-red-600 font-bold mb-1">
+                                    {error}
+                                </p>
+                            )}
+                            <p>{toeCode ? `Toe-Clip Code: ${toeCode}` : 'Toe-Clip Code'}</p>
+                        </div>
                     </label>
                 ) : (
                     <label className="btn capitalize text-xl text-black bg-white border-asu-maroon border-2 font-normal hover:bg-white/50">
@@ -514,12 +526,11 @@ export default function ToeCodeInput({
                     </label>
                 )}
 
+
                 <input
                     type="checkbox"
                     id="my-modal-4"
-                    className="
-          modal-toggle
-          "
+                    className="modal-toggle"
                 />
 
                 <motion.div className="modal z-40">
@@ -730,11 +741,10 @@ const PortraitTable = ({
                             return (
                                 <tr key={item}>
                                     <td
-                                        className={`${
-                                            index < array.length - 1
-                                                ? 'border-b border-black whitespace-nowrap'
-                                                : ''
-                                        }`}
+                                        className={`${index < array.length - 1
+                                            ? 'border-b border-black whitespace-nowrap'
+                                            : ''
+                                            }`}
                                     >
                                         {item}
                                     </td>
@@ -786,11 +796,10 @@ const PortraitTable = ({
                                         tdArray.push(
                                             <td
                                                 key={`${itemToDisplay}${i}`}
-                                                className={`${
-                                                    labelIndex < array.length - 1
-                                                        ? 'border-b border-r border-black'
-                                                        : 'border-r border-black'
-                                                }`}
+                                                className={`${labelIndex < array.length - 1
+                                                    ? 'border-b border-r border-black'
+                                                    : 'border-r border-black'
+                                                    }`}
                                             >
                                                 {itemToDisplay}
                                             </td>,
@@ -799,11 +808,10 @@ const PortraitTable = ({
                                         tdArray.push(
                                             <td
                                                 key={`${itemToDisplay}${i}`}
-                                                className={`${
-                                                    labelIndex < array.length - 1
-                                                        ? 'border-b border-black'
-                                                        : 'border-black'
-                                                }`}
+                                                className={`${labelIndex < array.length - 1
+                                                    ? 'border-b border-black'
+                                                    : 'border-black'
+                                                    }`}
                                             >
                                                 {itemToDisplay}
                                             </td>,
