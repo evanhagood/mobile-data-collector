@@ -197,22 +197,28 @@ export const syncDeletedEntries = async (deletedEntries, setLizardDataLoaded) =>
 export const getLizardAnswerFormDataFromFirestore = async (
     currentData,
     setLizardSpeciesList,
-    setFenceTraps,
+    setFenceTraps
 ) => {
+    // Remove spaces from project name for the query
+    const formattedProject = currentData.project.replace(/\s/g, '');
+    
     const speciesSnapshot = await getDocsFromCache(
         query(
             collection(db, 'AnswerSet'),
-            where('set_name', '==', `${currentData.project}LizardSpecies`),
+            where('set_name', '==', `${formattedProject}LizardSpecies`),
         ),
     );
+    
     let speciesCodesArray = [];
     for (const answer of speciesSnapshot.docs[0].data().answers) {
         speciesCodesArray.push(answer.primary);
     }
     setLizardSpeciesList(speciesCodesArray);
+    
     const fenceTrapsSnapshot = await getDocsFromCache(
         query(collection(db, 'AnswerSet'), where('set_name', '==', 'Fence Traps')),
     );
+    
     let fenceTrapsArray = [];
     for (const answer of fenceTrapsSnapshot.docs[0].data().answers) {
         fenceTrapsArray.push(answer.primary);
