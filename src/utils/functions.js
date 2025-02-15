@@ -495,15 +495,17 @@ export const deleteLizardEntries = async (currentData, environment) => {
 };
 
 const getGenusSpecies = async (project, taxa, speciesCode) => {
+    // Remove spaces from project name for the query
+    const formattedProject = project.replace(/\s/g, '');
+    
     const docsSnapshot = await getDocsFromCache(
-        query(collection(db, 'AnswerSet'), where('set_name', '==', `${project}${taxa}Species`)),
+        query(collection(db, 'AnswerSet'), 
+              where('set_name', '==', `${formattedProject}${taxa}Species`)),
     );
+    
     const answerSet = docsSnapshot.docs[0].data();
-    // console.log(speciesCode)
-    // console.log(answerSet)
     for (const answer of answerSet.answers) {
         if (answer.primary === speciesCode) {
-            // console.log(answer.secondary.Genus)
             return { genus: answer.secondary.Genus, species: answer.secondary.Species };
         }
     }
