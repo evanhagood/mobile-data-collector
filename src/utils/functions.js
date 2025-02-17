@@ -459,55 +459,164 @@ const createLizardEntry = async (currentData, dataEntry) => {
     return obj;
 };
 
-export const getCollectionSessionName = (project, environment) => {
-    let collectionName = `Test${project.replace(/\s/g, '')}Session`;
-    if (environment === 'live') collectionName = `${project.replace(/\s/g, '')}Session`;
-    return collectionName;
-};
+export const completeLizardCapture = async (
+    setCurrentData,
+    currentData,
+    setCurrentForm,
+    lizardData,
+    environment,
+    triggerLastEditUpdate,
+    setLastEditTime,
+) => {
+    console.log('=== Starting completeLizardCapture ===');
+    console.log('Current Data:', currentData);
+    console.log('Lizard Data:', lizardData);
+    console.log('Environment:', environment);
 
-export const getCollectionDataName = (project, environment) => {
-    let collectionName = `Test${project.replace(/\s/g, '')}Data`;
-    if (environment === 'live') collectionName = `${project.replace(/\s/g, '')}Data`;
-    return collectionName;
-};
+    const date = new Date();
+    console.log('New last edit time:', date.getTime());
+    setLastEditTime(date.getTime());
 
-export const deleteLizardEntries = async (currentData, environment) => {
-    const collectionName = getCollectionDataName(currentData.project, environment);
-    console.log(`deleting from ${collectionName}`);
-    const idsToDelete = [];
-    for (const lizardEntry of currentData.lizard) {
-        const lizardId = `${currentData.site}Lizard${lizardEntry.entryId}`;
-        idsToDelete.push(lizardId);
-    }
-    console.log(idsToDelete);
-    const batch = writeBatch(db);
-    for (const lizardId of idsToDelete) {
-        batch.delete(doc(db, collectionName, lizardId));
-        batch.update(doc(db, 'Metadata', 'LizardData'), {
-            deletedEntries: arrayUnion({
-                collectionId: collectionName,
-                entryId: lizardId,
-            }),
+    const lizardDataWithTimes = {
+        ...lizardData,
+        dateTime: getStandardizedDateTimeString(currentData.sessionEpochTime),
+        sessionDateTime: getStandardizedDateTimeString(currentData.sessionEpochTime),
+        lastEdit: date.getTime(),
+        entryId: date.getTime(),
+    };
+    console.log('Prepared lizard data with times:', lizardDataWithTimes);
+
+    const collectionName =
+        environment === 'live'
+            ? `${currentData.project.replace(/\s/g, '')}Data`
+            : `Test${currentData.project.replace(/\s/g, '')}Data`;
+    console.log('Target collection name:', collectionName);
+
+    try {
+        console.log('Creating lizard entry...');
+        const lizardEntry = await createLizardEntry(currentData, lizardDataWithTimes);
+        console.log('Created lizard entry:', lizardEntry);
+
+        console.log('Updating local data...');
+        updateData('lizard', lizardEntry, setCurrentData, currentData, setCurrentForm);
+
+        const docId = `${currentData.site}Lizard${date.getTime()}`;
+        console.log('Attempting to write to Firestore with document ID:', docId);
+        
+        await setDoc(
+            doc(db, collectionName, docId),
+            lizardEntry,
+        );
+        console.log('Successfully wrote to Firestore');
+
+        console.log('Triggering last edit update...');
+        await triggerLastEditUpdate();
+        console.log('=== Completed lizardCapture successfully ===');
+    } catch (error) {
+        console.error('Error in completeLizardCapture:', error);
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
         });
+        throw error; // Re-throw to maintain error handling chain
     }
-    await batch.commit();
-    console.log('complete');
 };
 
-const getGenusSpecies = async (project, taxa, speciesCode) => {
-    // Remove spaces from project name for the query
-    const formattedProject = project.replace(/\s/g, '');
-    
-    const docsSnapshot = await getDocsFromCache(
-        query(collection(db, 'AnswerSet'), 
-              where('set_name', '==', `${formattedProject}${taxa}Species`)),
-    );
-    
-    const answerSet = docsSnapshot.docs[0].data();
-    for (const answer of answerSet.answers) {
-        if (answer.primary === speciesCode) {
-            return { genus: answer.secondary.Genus, species: answer.secondary.Species };
-        }
+const createLizardEntry = async (currentData, dataEntry) => {
+    console.log('=== Starting createLizardEntry ===');
+    console.log('Input currentData:', currentData);
+    console.log('Input dataEntry:', dataEntry);
+
+    try {
+        const { genus, species } = await getGenusSpecies(
+            currentData.project,
+            'Lizard',
+            dataEntry.speciesCode,
+        );
+        console.log('Retrieved genus/species:', { genus, species });
+
+        const entryDate = new Date(dataEntry.dateTime);
+        const year = entryDate.getFullYear().toString();
+        
+        const obj = structuredClone(dataObjTemplate);
+        
+        // Log each significant field assignment
+        console.log('Setting required fields:', {
+            array: currentData.array || 'N/A',
+            dateTime: dataEntry.dateTime || 'N/A',
+            lastEdit: dataEntry.lastEdit,
+            entryId: dataEntry.entryId,
+            site: currentData.site || 'N/A',
+            sessionDateTime: dataEntry.sessionDateTime,
+            sessionId: currentData.sessionEpochTime
+        });
+
+        // ... (rest of the field assignments)
+
+        console.log('Final lizard entry object:', obj);
+        return obj;
+    } catch (error) {
+        console.error('Error in createLizardEntry:', error);
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        });
+        throw error;
     }
-    return { genus: 'N/A', species: 'N/A' };
+};
+
+export const getGenusSpecies = async (project, taxa, speciesCode) => {
+    console.log('=== Starting getGenusSpecies ===');
+    console.log('Inputs:', { project, taxa, speciesCode });
+
+    const formattedProject = project.replace(/\s/g, '');
+    console.log('Formatted project name:', formattedProject);
+
+    try {
+        const queryRef = query(
+            collection(db, 'AnswerSet'),
+            where('set_name', '==', `${formattedProject}${taxa}Species`)
+        );
+        console.log('Query parameters:', {
+            collection: 'AnswerSet',
+            setName: `${formattedProject}${taxa}Species`
+        });
+
+        const docsSnapshot = await getDocsFromCache(queryRef);
+        console.log('Query returned documents:', docsSnapshot.size);
+
+        if (docsSnapshot.empty) {
+            console.log('No matching documents found in cache');
+            return { genus: 'N/A', species: 'N/A' };
+        }
+
+        const answerSet = docsSnapshot.docs[0].data();
+        console.log('Answer set data:', answerSet);
+
+        for (const answer of answerSet.answers) {
+            if (answer.primary === speciesCode) {
+                console.log('Found matching species code:', {
+                    genus: answer.secondary.Genus,
+                    species: answer.secondary.Species
+                });
+                return { 
+                    genus: answer.secondary.Genus, 
+                    species: answer.secondary.Species 
+                };
+            }
+        }
+
+        console.log('No matching species code found');
+        return { genus: 'N/A', species: 'N/A' };
+    } catch (error) {
+        console.error('Error in getGenusSpecies:', error);
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        });
+        throw error;
+    }
 };
