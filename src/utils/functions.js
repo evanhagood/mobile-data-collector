@@ -488,18 +488,41 @@ export const deleteLizardEntries = async (currentData, environment) => {
     console.log('complete');
 };
 
-const getGenusSpecies = async (project, taxa, speciesCode) => {
-    const docsSnapshot = await getDocsFromCache(
-        query(collection(db, 'AnswerSet'), where('set_name', '==', `${project}${taxa}Species`)),
-    );
-    const answerSet = docsSnapshot.docs[0].data();
-    // console.log(speciesCode)
-    // console.log(answerSet)
-    for (const answer of answerSet.answers) {
-        if (answer.primary === speciesCode) {
-            // console.log(answer.secondary.Genus)
-            return { genus: answer.secondary.Genus, species: answer.secondary.Species };
+const getGenusSpecies = (project, taxa, speciesCode) => {
+    // Normalize project name by removing spaces
+    const normalizedProject = project.replace(/\s+/g, '');
+    
+    for (const set of answerSet) {
+        // Create both versions of possible set name to handle inconsistencies
+        const setNameWithSpaces = `${project}${taxa}Species`;
+        const setNameWithoutSpaces = `${normalizedProject}${taxa}Species`;
+        
+        // Check if set matches either naming pattern
+        if (set.set_name === setNameWithSpaces || set.set_name === setNameWithoutSpaces) {
+            console.log(`Found matching answer set: ${set.set_name}`);
+            
+            // Find the matching species code
+            for (const answer of set.answers) {
+                if (answer.primary === speciesCode) {
+                    // Ensure secondary data exists and contains Genus/Species
+                    if (answer.secondary && 
+                        answer.secondary.Genus && 
+                        answer.secondary.Species) {
+                        return [answer.secondary.Genus, answer.secondary.Species];
+                    } else {
+                        console.warn(`Missing Genus/Species data for ${speciesCode}`);
+                        return ['N/A', 'N/A'];
+                    }
+                }
+            }
+            
+            // If we found the right answer set but no matching species code
+            console.warn(`Species code ${speciesCode} not found in ${set.set_name}`);
+            return ['N/A', 'N/A'];
         }
     }
-    return { genus: 'N/A', species: 'N/A' };
-};
+    
+    // If no matching answer set was found at all
+    console.warn(`No answer set found for ${project}/${taxa}/Species`);
+    return ['N/A', 'N/A'];
+}
