@@ -44,6 +44,16 @@ export default function AboutUs() {
                 'Phil Soucheray',
             ],
         },
+        {
+            year: '2024-2025',
+            names: [
+                'Quinten Knowles',
+                'Ayesha Arif',
+                'Timothy Weaver',
+                'Evan Hagood',
+                'Chase Molstad',
+            ],
+        }
     ];
 
     return (
